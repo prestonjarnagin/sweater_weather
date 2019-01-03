@@ -5,4 +5,5 @@
 !/log/.keep
 !/tmp/.keep
 
+config/application.yml
 .byebug_history
