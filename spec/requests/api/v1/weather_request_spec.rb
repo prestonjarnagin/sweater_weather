@@ -11,7 +11,6 @@ RSpec.describe 'Forecast API' do
         expect(response).to be_successful
 
         data = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
-        require "pry"; binding.pry
         expect(data.keys).to include(:current)
         expect(data.keys).to include(:seven_day)
         expect(data.keys).to include(:hourly)
