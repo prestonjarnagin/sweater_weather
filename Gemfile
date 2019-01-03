@@ -29,6 +29,7 @@ gem 'puma', '~> 3.7'
   gem 'rspec-rails'
   gem 'fast_jsonapi'
   gem 'json'
+  gem 'bcrypt'
 
 
 group :development, :test do
