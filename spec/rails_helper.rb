@@ -1,5 +1,20 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+
+require 'spec_helper'
+require 'pry'
+require 'simplecov'
+require 'vcr'
+require 'webmock/rspec'
+require 'shoulda-matchers'
+
+SimpleCov.start "rails" do
+  add_filter 'app/channels/application_cable/channel.rb'
+  add_filter 'app/channels/application_cable/connection.rb'
+  add_filter 'app/jobs/application_job.rb'
+  add_filter 'app/mailers/application_mailer.rb'
+end
+
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
@@ -58,4 +73,20 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  Shoulda::Matchers.configure do |config|
+      config.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
+    end
+  end
+end
+
+VCR.configure do |config|
+  config.ignore_localhost = true
+  config.allow_http_connections_when_no_cassette = true
+  config.cassette_library_dir = 'spec/cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+  config.filter_sensitive_data("<GOOGLE_API_KEY>") { ENV['GOOGLE_API_KEY'] }
 end
