@@ -1,4 +1,5 @@
 class DayWeather
+  attr_reader :summary
 
   def initialize(weather_data)
     @time = weather_data[:time]
