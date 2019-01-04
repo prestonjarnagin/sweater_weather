@@ -21,9 +21,9 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 03 Jan 2019 02:37:06 GMT
+      - Fri, 04 Jan 2019 17:59:55 GMT
       Expires:
-      - Fri, 04 Jan 2019 02:37:06 GMT
+      - Sat, 05 Jan 2019 17:59:55 GMT
       Cache-Control:
       - public, max-age=86400
       Vary:
@@ -39,7 +39,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=38
+      - gfet4t7; dur=41
       Alt-Svc:
       - quic=":443"; ma=2592000; v="44,43,39,35"
     body:
@@ -105,7 +105,7 @@ http_interactions:
            "status" : "OK"
         }
     http_version: 
-  recorded_at: Thu, 03 Jan 2019 02:37:07 GMT
+  recorded_at: Fri, 04 Jan 2019 17:59:55 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=denver,co&key=<GOOGLE_API_KEY>
@@ -127,9 +127,9 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 03 Jan 2019 02:37:07 GMT
+      - Fri, 04 Jan 2019 17:59:55 GMT
       Expires:
-      - Fri, 04 Jan 2019 02:37:07 GMT
+      - Sat, 05 Jan 2019 17:59:55 GMT
       Cache-Control:
       - public, max-age=86400
       Vary:
@@ -145,7 +145,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=53
+      - gfet4t7; dur=33
       Alt-Svc:
       - quic=":443"; ma=2592000; v="44,43,39,35"
     body:
@@ -211,5 +211,5 @@ http_interactions:
            "status" : "OK"
         }
     http_version: 
-  recorded_at: Thu, 03 Jan 2019 02:37:07 GMT
+  recorded_at: Fri, 04 Jan 2019 17:59:55 GMT
 recorded_with: VCR 4.0.0

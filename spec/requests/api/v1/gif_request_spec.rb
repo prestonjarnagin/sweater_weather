@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Giphy API' do
 
   it 'GET /api/v1/gifs?location=denver,co' do
-    VCR.use_cassette("gif_service") do
+    VCR.use_cassette("gif_feature") do
 
       location = 'denver,co'
       get "/api/v1/gifs?location=#{location}"
