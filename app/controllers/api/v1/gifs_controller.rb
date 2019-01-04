@@ -8,11 +8,14 @@ class Api::V1::GifsController < ApplicationController
 
     weather = Weather.new(coordinates)
 
-    gifs = Gifs.new(weather.seven_day)
+    weather_with_gifs = Gifs.new(weather.seven_day).weather
 
-
-    render json: gifs.weather
-
+    response = {
+      data: {
+        daily_forecasts: weather_with_gifs
+      },
+      'copyright': 2018
+    }
+    render json: response
   end
-
 end
