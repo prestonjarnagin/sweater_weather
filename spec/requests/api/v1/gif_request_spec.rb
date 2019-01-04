@@ -12,16 +12,12 @@ RSpec.describe 'Giphy API' do
       forecasts = JSON.parse(response.body, symbolize_names: true)[:data][:daily_forecasts]
 
       expect(forecasts).to be_an_instance_of(Array)
-      expect(forecasts.first).to be_an_instance_of(Hash)
-      expect(forecasts.first[:time]).to_not be_nil
-      expect(forecasts.first[:summary]).to_not be_nil
-      expect(forecasts.first[:url]).to_not be_nil
 
-      expect(forecasts.last).to be_an_instance_of(Hash)
-      expect(forecasts.last[:time]).to_not be_nil
-      expect(forecasts.last[:summary]).to_not be_nil
-      expect(forecasts.last[:url]).to_not be_nil
+      expect(forecasts).to all(be_an_instance_of(Hash))
+      expect(forecasts).to all(include(:time))
+      expect(forecasts).to all(include(:summary))
+      expect(forecasts).to all(include(:url))
+
     end
   end
-
 end
