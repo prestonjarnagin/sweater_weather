@@ -1,7 +1,17 @@
 class GifService
 
+  def initialize
+    @_search_query
+    @_response
+  end
+
   def get_json(search_query)
-    JSON.parse(response(search_query).body, symbolize_names: true)
+    if search_query == @_search_query
+      @_response
+    else
+      @_search_query = search_query
+      @_response = JSON.parse(response(search_query).body, symbolize_names: true)
+    end
   end
 
   def random_gif(search_query)
