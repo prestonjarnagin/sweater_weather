@@ -5,7 +5,7 @@ RSpec.describe 'Favorites API' do
     describe '/api/v1/favorites' do
       it 'Succeeds' do
         user = create(:user)
-        expect(user.favorite_cities).to be_empty
+        expect(user.cities).to be_empty
           payload = {
             location: 'Denver, CO',
             api_key: user.key
