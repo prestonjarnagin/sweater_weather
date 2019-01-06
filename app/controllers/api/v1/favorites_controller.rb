@@ -1,5 +1,9 @@
 class Api::V1::FavoritesController < ApplicationController
 
+  def index
+
+  end
+  
   def create
     begin
       user = User.find_by(key: params[:api_key])
@@ -15,5 +19,6 @@ class Api::V1::FavoritesController < ApplicationController
       render status: 401
     end
   end
+
 
 end
