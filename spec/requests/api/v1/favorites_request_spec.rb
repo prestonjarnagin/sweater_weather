@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Favorites API' do
-  describe 'GET' do
+  describe 'POST' do
     describe '/api/v1/favorites' do
       VCR.turned_off do
         # QUESTION Why does VCR explicitly need to be turned off?
