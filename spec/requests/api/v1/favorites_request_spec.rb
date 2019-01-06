@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Favorites API' do
+  let(:user){ create(:user) }
   describe 'POST' do
     describe '/api/v1/favorites' do
       VCR.turned_off do
         # QUESTION Why does VCR explicitly need to be turned off?
-        let(:user){ create(:user) }
         let(:payload) {
           {
             location: 'Denver, CO',
@@ -48,6 +48,18 @@ RSpec.describe 'Favorites API' do
           expect(user.cities).to be_empty
         end
 
+      end
+    end
+  end
+
+  describe 'GET' do
+    describe '/api/v1/favorites' do
+      it 'Succeeds' do
+        3.times do
+          user.cities.create(attributes_for(:city))
+        end
+        get '/api/v1/favorites', params: {api_key: user.key}.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        expect(response).to be_successful
       end
     end
   end
