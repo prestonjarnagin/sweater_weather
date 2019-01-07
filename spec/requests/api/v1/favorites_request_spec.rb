@@ -57,7 +57,7 @@ RSpec.describe 'Favorites API' do
   describe 'GET' do
 
     before(:each) do
-      stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=Denver&key=#{ENV['GOOGLE_API_KEY']}").
+      stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=Denver,%20CO&key=#{ENV['GOOGLE_API_KEY']}").
         with(headers: {
           'Accept'=>'*/*',
           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
@@ -75,7 +75,7 @@ RSpec.describe 'Favorites API' do
     end
     describe '/api/v1/favorites' do
       it 'Succeeds' do
-        user.cities.create(name: "Denver")
+        user.cities.create(name: "Denver, CO")
         post_body = {
           api_key: user.key
         }
@@ -84,7 +84,7 @@ RSpec.describe 'Favorites API' do
       end
 
       it 'Shows user favorite cities' do
-        user.cities.create(name: 'Denver')
+        user.cities.create(name: 'Denver, CO')
         post_body = {
           api_key: user.key
         }
@@ -92,6 +92,21 @@ RSpec.describe 'Favorites API' do
         data = JSON.parse(response.body, symbolize_names: true)[:data]
         expect(data[0].keys).to include(:id)
         expect(data[0][:attributes].keys).to include(:current_weather)
+      end
+    end
+  end
+
+  describe 'DELETE' do
+    describe '/api/v1/favorites' do
+      it 'Succeeds' do
+        user.cities.create(name: 'Denver, CO')
+        post_body = {
+          location: 'Denver, CO',
+          api_key: user.key
+        }
+        delete '/api/v1/favorites', params: post_body, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+
+
       end
     end
   end
