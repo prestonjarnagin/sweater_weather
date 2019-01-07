@@ -26,5 +26,18 @@ class Api::V1::FavoritesController < ApplicationController
     end
   end
 
+  def delete
+    begin
+      user = User.find_by(key: params[:api_key])
 
+      cities = user.cities
+      city = cities.find_by(name: params[:location])
+      city.destroy!
+      render status: 200
+
+    rescue
+      render status: 401
+    end
+
+  end
 end
