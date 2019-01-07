@@ -1,9 +1,15 @@
 class Api::V1::FavoritesController < ApplicationController
 
   def index
+    begin
+      cities = User.find_by(key: params[:api_key]).cities
 
+      render json: CitySerializer.new(cities)
+    rescue
+      render status: 401
+    end
   end
-  
+
   def create
     begin
       user = User.find_by(key: params[:api_key])
