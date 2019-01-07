@@ -107,8 +107,21 @@ RSpec.describe 'Favorites API' do
         delete '/api/v1/favorites', params: post_body.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
         expect(response).to be_successful
         expect(response).to have_http_status(200)
+      end
 
+      it 'Succeessfully deletes resource' do
+        user.cities.create(name: 'Denver, CO')
+        expect(City.all.length).to eq(1)
+        post_body = {
+          location: 'Denver, CO',
+          api_key: user.key
+        }
+        delete '/api/v1/favorites', params: post_body.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
 
+        expect(City.all).to be_empty
+        # QUESTION Expecting user.cities to be empty here fails
+        # but checking user.cities with pry while inside the
+        # controller gives the expected output.
       end
     end
   end
