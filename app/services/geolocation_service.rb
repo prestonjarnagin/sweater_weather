@@ -2,14 +2,23 @@ class GeolocationService
 
   def initialize(location_query)
     @location_query = location_query
+    @_get_json
   end
 
   def coordinates
-    co = get_coordinates(@location_query)
+    co = get_coordinates
     {
       lat: co[:lat],
       lng: co[:lng]
     }
+  end
+
+  def city
+    address_components[0][:long_name]
+  end
+
+  def state
+    address_components[2][:short_name]
   end
 
   private
@@ -21,12 +30,16 @@ class GeolocationService
     end
   end
 
-  def get_coordinates(location)
-    get_json("/maps/api/geocode/json?address=#{location}")[0][:geometry][:location]
+  def get_coordinates
+    get_json("/maps/api/geocode/json?address=#{@location_query}")[0][:geometry][:location]
   end
 
   def get_json(url)
-    JSON.parse(conn.get(url).body, symbolize_names: true)[:results]
+    @_get_json ||= JSON.parse(conn.get(url).body, symbolize_names: true)[:results]
+  end
+
+  def address_components
+    get_json("/maps/api/geocode/json?address=#{@location_query}")[0][:address_components]
   end
 
 end

@@ -2,8 +2,9 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     begin
-      User.create!(user_params)
+      user = User.create!(user_params)
       api_key = SecureRandom.urlsafe_base64
+      user.update(key: api_key)
       # API keys should probably be hashed before
       # being saved to the database
       ## api_key = BCrypt::Password.create(api_key)
