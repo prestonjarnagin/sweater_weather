@@ -93,6 +93,15 @@ RSpec.describe 'Favorites API' do
         expect(data[0].keys).to include(:id)
         expect(data[0][:attributes].keys).to include(:current_weather)
       end
+
+      it 'Fails with an incorrect key' do
+        user.cities.create(name: "Denver, CO")
+        post_body = {
+          api_key: "#{user.key}1"
+        }
+        get '/api/v1/favorites', params: post_body, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        expect(response).to have_http_status(401)
+      end
     end
   end
 
@@ -122,6 +131,16 @@ RSpec.describe 'Favorites API' do
         # QUESTION Expecting user.cities to be empty here fails
         # but checking user.cities with pry while inside the
         # controller gives the expected output.
+      end
+
+      it 'Fails with an incorrect key' do
+        user.cities.create(name: "Denver, CO")
+        post_body = {
+          api_key: "#{user.key}1"
+        }
+        delete '/api/v1/favorites', params: post_body.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        expect(response).to have_http_status(401)
+        expect(City.all.length).to eq(1)
       end
     end
   end
