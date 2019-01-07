@@ -104,7 +104,7 @@ RSpec.describe 'Favorites API' do
           location: 'Denver, CO',
           api_key: user.key
         }
-        delete '/api/v1/favorites', params: post_body, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        delete '/api/v1/favorites', params: post_body.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
 
 
       end
