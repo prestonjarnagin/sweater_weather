@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       post '/sessions', to: 'sessions#show'
       post '/favorites', to: 'favorites#create'
 
+      delete '/favorites', to: 'favorites#delete'
+
     end
   end
 end
