@@ -3,7 +3,7 @@ class User < ApplicationRecord
   validates :password, confirmation: {case_sensitive: true}
   validates :email, presence: true, uniqueness: true
 
-  has_many :user_cities
+  has_many :user_cities, dependent: :destroy
   has_many :cities, through: :user_cities
   has_secure_password
 end
