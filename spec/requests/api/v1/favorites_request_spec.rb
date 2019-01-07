@@ -105,6 +105,8 @@ RSpec.describe 'Favorites API' do
           api_key: user.key
         }
         delete '/api/v1/favorites', params: post_body.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        expect(response).to be_successful
+        expect(response).to have_http_status(200)
 
 
       end
