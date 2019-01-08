@@ -133,6 +133,38 @@ RSpec.describe 'Favorites API' do
         # controller gives the expected output.
       end
 
+      it 'Returns remaining user favorites' do
+        stub_request(:get, "https://maps.googleapis.com/maps/api/geocode/json?address=Boulder,%20CO&key=#{ENV['GOOGLE_API_KEY']}").
+         with(
+           headers: {
+              'Accept'=>'*/*',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'User-Agent'=>'Faraday v0.15.4'
+           }).
+         to_return(status: 200, body: File.read('./spec/fixtures/boulder_geolocation_response.json'), headers: {})
+         stub_request(:get, "https://api.darksky.net/forecast/#{ENV['DARKSKY_API_KEY']}/40.0149856,-105.2705456").
+         with(
+           headers: {
+              'Accept'=>'*/*',
+              'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+              'User-Agent'=>'Faraday v0.15.4'
+           }).
+         to_return(status: 200, body: File.read('./spec/fixtures/darksky_response.json'), headers: {})
+        user.cities.create(name: 'Denver, CO')
+        user.cities.create(name: 'Boulder, CO')
+        expect(City.all.length).to eq(2)
+
+        post_body = {
+          location: 'Denver, CO',
+          api_key: user.key
+        }
+        delete '/api/v1/favorites', params: post_body.to_json, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        expect(City.all.length).to eq(1)
+        data = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(data[0]).not_to be_nil
+        expect(data[1]).to be_nil
+      end
+
       it 'Fails with an incorrect key' do
         user.cities.create(name: "Denver, CO")
         post_body = {
