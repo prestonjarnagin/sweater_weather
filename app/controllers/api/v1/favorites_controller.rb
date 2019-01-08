@@ -14,7 +14,7 @@ class Api::V1::FavoritesController < ApplicationController
     begin
       user = User.find_by(key: params[:api_key])
 
-      #Lookup city by geolocation
+      # Parse params into standard city format with geolocation service
       location = GeolocationService.new(params[:location])
       location.state
       city_state = "#{location.city}, #{location.state}"
