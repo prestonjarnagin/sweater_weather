@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'Forecast API' do
+RSpec.describe 'Forecast API', :vcr do
 
   it 'GET /api/v1/forecast?location=denver,co' do
-    VCR.use_cassette("google_geolocation_service") do
-      VCR.use_cassette("darksky_service") do
+    # VCR.use_cassette("google_geolocation_service") do
+      # VCR.use_cassette("darksky_service") do
         location = 'denver,co'
 
         get "/api/v1/forecast?location=#{location}"
@@ -14,7 +14,7 @@ RSpec.describe 'Forecast API' do
         expect(data.keys).to include(:current)
         expect(data.keys).to include(:seven_day)
         expect(data.keys).to include(:hourly)
-      end
-    end
+      # end
+    # end
   end
 end

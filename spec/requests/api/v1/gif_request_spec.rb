@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'Giphy API' do
 
-  it 'GET /api/v1/gifs?location=denver,co' do
-    VCR.use_cassette("gif_feature") do
+  it 'GET /api/v1/gifs?location=denver,co', :vcr do
+    # VCR.use_cassette("gif_feature") do
 
       location = 'denver,co'
       get "/api/v1/gifs?location=#{location}"
@@ -18,6 +18,6 @@ RSpec.describe 'Giphy API' do
       expect(forecasts).to all(include(:summary))
       expect(forecasts).to all(include(:url))
 
-    end
+    # end
   end
 end
