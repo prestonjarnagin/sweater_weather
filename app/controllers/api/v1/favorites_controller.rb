@@ -33,8 +33,7 @@ class Api::V1::FavoritesController < ApplicationController
       cities = user.cities
       city = cities.find_by(name: params[:location])
       city.destroy!
-      render status: 200
-
+      render status: 200, json: CitySerializer.new(cities)
     rescue
       render status: 401
     end
