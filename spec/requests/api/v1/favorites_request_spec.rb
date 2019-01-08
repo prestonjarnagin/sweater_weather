@@ -83,7 +83,7 @@ RSpec.describe 'Favorites API' do
         expect(response).to be_successful
       end
 
-      it 'Shows user favorite cities' do
+      it 'Shows user favorite cities with forecast' do
         user.cities.create(name: 'Denver, CO')
         post_body = {
           api_key: user.key
@@ -91,7 +91,10 @@ RSpec.describe 'Favorites API' do
         get '/api/v1/favorites', params: post_body, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
         data = JSON.parse(response.body, symbolize_names: true)[:data]
         expect(data[0].keys).to include(:id)
-        expect(data[0][:attributes].keys).to include(:current_weather)
+        weather = data[0][:attributes][:weather]
+        expect(weather.keys).to include(:current)
+        expect(weather.keys).to include(:hourly)
+        expect(weather.keys).to include(:seven_day)
       end
 
       it 'Fails with an incorrect key' do
