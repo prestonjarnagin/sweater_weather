@@ -73,6 +73,7 @@ RSpec.describe 'Favorites API' do
         }).
         to_return(status: 200, body: File.read('./spec/fixtures/darksky_response.json'), headers: {})
     end
+
     describe '/api/v1/favorites' do
       it 'Succeeds' do
         user.cities.create(name: "Denver, CO")
@@ -95,6 +96,15 @@ RSpec.describe 'Favorites API' do
         expect(weather.keys).to include(:current)
         expect(weather.keys).to include(:hourly)
         expect(weather.keys).to include(:seven_day)
+      end
+
+      it 'Succeeds when user has no favorites' do
+        post_body = {
+          api_key: user.key
+        }
+        get '/api/v1/favorites', params: post_body, headers: { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+        data = JSON.parse(response.body, symbolize_names: true)[:data]
+        expect(data).to be_empty
       end
 
       it 'Fails with an incorrect key' do
