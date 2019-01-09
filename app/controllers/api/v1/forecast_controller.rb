@@ -1,8 +1,7 @@
 class Api::V1::ForecastController < ApplicationController
 
   def show
-    location_query = params[:location]
-    location_service = GeolocationService.new(location_query)
+    location_service = GeolocationService.new(params[:location])
     coordinates = location_service.coordinates
 
     weather = Weather.new(coordinates)
