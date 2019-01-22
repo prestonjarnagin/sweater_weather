@@ -30,6 +30,7 @@ gem 'puma', '~> 3.7'
   gem 'fast_jsonapi'
   gem 'json'
   gem 'bcrypt'
+  gem 'rack-cors', require: 'rack/cors'
 
 
 group :development, :test do
