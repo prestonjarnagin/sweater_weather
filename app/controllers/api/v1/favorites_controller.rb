@@ -11,7 +11,6 @@ class Api::V1::FavoritesController < ApplicationController
 
   def create
     begin
-      # Parse params into standard city format with geolocation service
       location = GeolocationService.new(params[:location])
       city_state = "#{location.city}, #{location.state}"
       current_user.cities.find_or_create_by(name: city_state)
